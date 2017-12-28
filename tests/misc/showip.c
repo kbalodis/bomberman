@@ -12,7 +12,7 @@
 void 
 print_usage(void) 
 {
-    fprintf(stderr, "showip {hostname}\n");
+    fprintf(stderr, "showip [hostname]\n");
 }
 
 int main(int argc, char *argv[])
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     int status;
 
-    if ((status = getaddrinfo(hostname, NULL, &hints, &servinfo)) != 0) {           // Second arg is (char*) port number.
+    if ((status = getaddrinfo(hostname, NULL, &hints, &servinfo)) != 0) {           // Second arg is (char*) port number (can pass "http", "ftp" etc. instead of port number).
         fprintf(stderr, "!! getaddrinfo error: %s !!\n", gai_strerror(status));
         exit(2);
     }
@@ -55,8 +55,7 @@ int main(int argc, char *argv[])
             struct sockaddr_in *ipv4 = (struct sockaddr_in*)p->ai_addr;
             addr = &(ipv4->sin_addr);
             ipver = "IPv4";
-        }
-        else {
+        } else {
             struct sockaddr_in6 *ipv6 = (struct sockaddr_in6*)p->ai_addr;
             addr = &(ipv6->sin6_addr);
             ipver = "IPv6";
