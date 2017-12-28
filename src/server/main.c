@@ -16,7 +16,7 @@ sigchild_handler(int s)
 {
     int cur_error = errno;
 
-    while (waitpid(-1, NULL, WNHANG) > 0)
+    while (waitpid(-1, NULL, WNOHANG) > 0)
     ;
 
     errno = cur_error;
@@ -53,9 +53,8 @@ int main(int argc, char *argv[])
 
     // Parse optional arguments
     char arg;
-    while ((arg = getopt(argc, argv, "v")) != EOF)
-    {
-        switch (c)
+    while ((arg = getopt(argc, argv, "v")) != EOF) {
+        switch (arg)
         {
             case 'v':
                 v = 1;
@@ -91,7 +90,7 @@ int main(int argc, char *argv[])
     int yes = 1;
 
     for (p = servinfo; p != NULL; p = p->ai_next) {     // Iterate over the resulting linked list, try to bind to the first available one.
-        if ((sockfd = socket(->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
+        if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
             if (v)
                 fprintf(stdout, " * socket() failed\n");
 
@@ -118,7 +117,7 @@ int main(int argc, char *argv[])
         break;
     }
 
-    freeaddrinfo(serinfo);
+    freeaddrinfo(servinfo);
 
     if (!p) {
         fprintf(stderr, "!! server failed to bind !!\n");
@@ -161,7 +160,7 @@ int main(int argc, char *argv[])
 
         inet_ntop(
             client_addr.ss_family, 
-            get_sockaddr_in((struct sockaddr*)&client_addr)),
+            get_sockaddr_in((struct sockaddr*)&client_addr),
             ipstr, 
             sizeof(ipstr));
         
