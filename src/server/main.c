@@ -34,9 +34,9 @@ void
 print_usage(FILE *out) 
 {
     fprintf(out, "server [port] [backlog] [-v]\n");
-    fprintf(out, "    port - Port number to listen on.\n");
-    fprintf(out, "    backlog - Number of clients that can connect.\n");
-    fprintf(out, "    v (optional) - Verbose output.\n");
+    fprintf(out, "    \nport - Port number to listen on.\n");
+    fprintf(out, "    \nbacklog - Number of clients that can connect.\n");
+    fprintf(out, "    \nv (optional) - Verbose output.\n");
 }
 
 int main(int argc, char *argv[])
