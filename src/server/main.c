@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     }
 
     char *port = argv[1];
-    char *backlog = argv[2];
+    int backlog = atoi(argv[2]);
 
     int v = 0;
 
