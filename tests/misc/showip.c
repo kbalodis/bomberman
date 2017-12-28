@@ -33,17 +33,19 @@ int main(int argc, char *argv[])
     int status;
 
     if ((status = getaddrinfo(hostname, NULL, &hints, &servinfo)) != 0) {
-        fprintf(stderr, "!! getaddrinfo error: %s !!\n", gai_stderror(status));
+        fprintf(stderr, "!! getaddrinfo error: %s !!\n", gai_strerror(status));
         exit(2);
     }
 
     fprintf(stdout, "--- IP addresses for '%s' ---\n", hostname);
 
+    char ipstr[INET6_ADDRSTRLEN];
+
     for (p = servinfo; p != NULL; p = p->ai_next) {
         void *addr;
         char *ipver;
 
-        if (p->ai_family == AF_NET) {
+        if (p->ai_family == AF_INET) {
             struct sockaddr_in *ipv4 = (struct sockaddr_in*)p->ai_addr;
             addr = &(ipv4->sin_addr);
             ipver = "IPv4";
